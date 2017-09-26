@@ -41,4 +41,4 @@ var User = /** @class */ (function () {
     };
     return User;
 }());
-exports.default = new User();
+exports.default = User;

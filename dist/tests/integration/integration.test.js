@@ -49,14 +49,13 @@ describe('Routes: Teste de Integração - User', function () {
     describe('GET /api/users/:id', function () {
         it('Deve retornar um Array com apenas um Usuário', function (done) {
             helpers_1.request(helpers_1.app)
-                .get('/api/users/${userDefault.id}')
+                .get("/api/users/" + userDefault.id)
                 .end(function (error, res) {
                 helpers_1.expect(res.status).to.equal(httpStatus.OK);
                 helpers_1.expect(res.body.payload.id).to.equal(userDefault.id);
                 helpers_1.expect(res.body.payload).to.have.all.keys([
                     'id', 'name', 'email', 'password'
                 ]);
-                // id = res.body.payload.id;
                 done(error);
             });
         });
@@ -88,7 +87,7 @@ describe('Routes: Teste de Integração - User', function () {
                 email: 'update@email.com'
             };
             helpers_1.request(helpers_1.app)
-                .put('/api/users/${userTest.id}/update')
+                .put("/api/users/" + userTest.id + "/update")
                 .send(user)
                 .end(function (error, res) {
                 helpers_1.expect(res.status).to.equal(httpStatus.OK);
@@ -100,7 +99,7 @@ describe('Routes: Teste de Integração - User', function () {
     describe('DELETE /api/users/:id/destroy', function () {
         it('Deve deletar um Usuário', function (done) {
             helpers_1.request(helpers_1.app)
-                .delete('/api/users/${userTest.id}/destroy')
+                .del("/api/users/" + userTest.id + "/destroy")
                 .end(function (error, res) {
                 helpers_1.expect(res.status).to.equal(httpStatus.OK);
                 helpers_1.expect(res.body.payload).to.eql(1);

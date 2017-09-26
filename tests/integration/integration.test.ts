@@ -56,14 +56,13 @@ describe('Routes: Teste de Integração - User', () => {
   describe('GET /api/users/:id', () => {
     it('Deve retornar um Array com apenas um Usuário', done => {
       request(app)
-        .get('/api/users/${userDefault.id}')
+        .get(`/api/users/${userDefault.id}`)
         .end((error, res) => {
           expect(res.status).to.equal(httpStatus.OK);
           expect(res.body.payload.id).to.equal(userDefault.id);
           expect(res.body.payload).to.have.all.keys([
             'id', 'name', 'email', 'password'
           ]);
-          // id = res.body.payload.id;
           done(error);
         });
     });
@@ -76,7 +75,7 @@ describe('Routes: Teste de Integração - User', () => {
         name: 'Usuario Teste',
         email: 'usuario@email.com',
         password: 'novouser'
-      }
+      };
 
       request(app)
         .post('/api/users/create')
@@ -100,7 +99,7 @@ describe('Routes: Teste de Integração - User', () => {
       }
 
       request(app)
-        .put('/api/users/${userTest.id}/update')
+        .put(`/api/users/${userTest.id}/update`)
         .send(user)
         .end((error, res) => {
           expect(res.status).to.equal(httpStatus.OK);
@@ -114,10 +113,10 @@ describe('Routes: Teste de Integração - User', () => {
   describe('DELETE /api/users/:id/destroy', () => {
     it('Deve deletar um Usuário', done => {
       request(app)
-        .delete('/api/users/${userTest.id}/destroy')
+        .del(`/api/users/${userTest.id}/destroy`)
         .end((error, res) => {
           expect(res.status).to.equal(httpStatus.OK);
-	  expect(res.body.payload).to.eql(1);
+	        expect(res.body.payload).to.eql(1);
           done(error);
         });
     });
