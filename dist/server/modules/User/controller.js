@@ -1,7 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+var dbErrorHandler_1 = require("../../config/dbErrorHandler");
+var sucessHandler_1 = require("../../api/responses/sucessHandler");
+var errorHandler_1 = require("../../api/responses/errorHandler");
 var service_1 = require("./service");
-var httpStatus = require("http-status");
+var _ = require("lodash");
 var UserController = /** @class */ (function () {
     function UserController() {
         this.UserService = new service_1.default();
@@ -9,73 +12,34 @@ var UserController = /** @class */ (function () {
     UserController.prototype.getAll = function (req, res) {
         this.UserService
             .getAll()
-            .then(function (data) {
-            res.status(httpStatus.OK).json({
-                payload: data
-            });
-        })
-            .catch(function (err) {
-            res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
-                payload: 'Erro ao buscar todos usuários'
-            });
-        });
+            .then(_.partial(sucessHandler_1.onSuccess, res))
+            .catch(_.partial(errorHandler_1.onError, res, 'Erro ao buscar todos os usuários'));
     };
     UserController.prototype.createUser = function (req, res) {
         this.UserService
             .create(req.body)
-            .then(function (data) {
-            res.status(httpStatus.OK).json({
-                payload: data
-            });
-        })
-            .catch(function (err) {
-            res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
-                payload: 'Erro ao cadastrar novo usuário'
-            });
-        });
+            .then(_.partial(sucessHandler_1.onSuccess, res))
+            .catch(_.partial(dbErrorHandler_1.dbErrorHandler, res))
+            .catch(_.partial(errorHandler_1.onError, res, 'Erro ao inserir novo usuário'));
     };
     UserController.prototype.getById = function (req, res) {
         var userId = parseInt(req.params.id);
         this.UserService.getById(userId)
-            .then(function (data) {
-            res.status(httpStatus.OK).json({
-                payload: data
-            });
-        })
-            .catch(function (err) {
-            res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
-                payload: 'Erro ao buscar usuario'
-            });
-        });
+            .then(_.partial(sucessHandler_1.onSuccess, res))
+            .catch(_.partial(errorHandler_1.onError, res, 'Usuário não encontrado'));
     };
     UserController.prototype.updateUser = function (req, res) {
         var userId = parseInt(req.params.id);
         var props = req.body;
         this.UserService.update(userId, props)
-            .then(function (data) {
-            res.status(httpStatus.OK).json({
-                payload: data
-            });
-        })
-            .catch(function (err) {
-            res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
-                payload: 'Erro ao atualizar o usuario'
-            });
-        });
+            .then(_.partial(sucessHandler_1.onSuccess, res))
+            .catch(_.partial(errorHandler_1.onError, res, 'Erro ao atualizar o usuário'));
     };
     UserController.prototype.deleteUser = function (req, res) {
         var userId = parseInt(req.params.id);
         this.UserService.delete(userId)
-            .then(function (data) {
-            res.status(httpStatus.OK).json({
-                payload: data
-            });
-        })
-            .catch(function (err) {
-            res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
-                payload: 'Erro ao excluir o usuario'
-            });
-        });
+            .then(_.partial(sucessHandler_1.onSuccess, res))
+            .catch(_.partial(errorHandler_1.onError, res, 'Erro ao excluir usuário'));
     };
     return UserController;
 }());

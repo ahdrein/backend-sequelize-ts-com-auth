@@ -11,22 +11,22 @@ function default_1(sequelize, DataTypes) {
             type: DataTypes.STRING,
             allowNull: false,
             validate: {
-                notEmpty: true,
-            },
+                notEmpty: true
+            }
         },
         email: {
             type: DataTypes.STRING,
             allowNull: false,
             validate: {
-                notEmpty: true,
-            },
+                notEmpty: true
+            }
         },
         password: {
             type: DataTypes.STRING,
             allowNull: false,
             validate: {
-                notEmpty: true,
-            },
+                notEmpty: true
+            }
         }
     });
     return User;

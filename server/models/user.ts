@@ -10,22 +10,22 @@ export default function (sequelize, DataTypes) {
             type: DataTypes.STRING,
             allowNull: false,
             validate: {
-                notEmpty: true,
-            },
+        notEmpty: true
+      }
         },
         email: {
             type: DataTypes.STRING,
             allowNull: false,
             validate: {
-                notEmpty: true,
-            },
+        notEmpty: true
+      }
         },
         password: {
             type: DataTypes.STRING,
             allowNull: false,
             validate: {
-                notEmpty: true,
-            },
+        notEmpty: true
+      }
         }
 
     });

@@ -10,6 +10,7 @@ var UserRoutes = /** @class */ (function () {
         return UserCtrl.getAll(req, res);
     };
     UserRoutes.prototype.create = function (req, res) {
+        console.log(req.body);
         return UserCtrl.createUser(req, res);
     };
     UserRoutes.prototype.findOne = function (req, res) {

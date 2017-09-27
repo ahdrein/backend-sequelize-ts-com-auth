@@ -15,6 +15,7 @@ class UserRoutes {
 
 
     create(req: Request, res: Response) {
+        console.log(req.body);
         return UserCtrl.createUser(req, res);
     }
 
