@@ -1,10 +1,13 @@
+
 import * as express from 'express';
 import { Application } from 'express';
 import * as morgan from 'morgan';
 import * as bodyParser from 'body-parser';
 import Routes from './routes/routes';
-import { errorHandlerApi } from './errorHandlerApi';
-//const helmet = require('helmet');
+import Handlers from './responses/handlers';
+const helmet = require('helmet');
+const compression = require('compression');
+import Auth from '../auth';
 
 class Api {
     
@@ -16,8 +19,7 @@ class Api {
     }
 
     middleware(): void {
-        this.router(this.express);
-        
+
 	    this.express.use(function (req, res, next) {
 	      res.setHeader('Access-Control-Allow-Origin', '*');
 	      res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
@@ -27,15 +29,16 @@ class Api {
         
         this.express.use(morgan('dev'));
         this.express.use(bodyParser.urlencoded({ extended: true }));
-        this.express.use(bodyParser.json);
-        //this.express.use(helmet());
-        this.express.use(errorHandlerApi);
-        
-        
+        this.express.use(bodyParser.json());
+        this.express.use(helmet());
+        this.express.use(compression());
+    this.express.use(Handlers.errorHandlerApi);
+        this.express.use(Auth.config().initialize());
+        this.router(this.express, Auth);
     }
 
-    private router(app: Application): void {
-        new Routes(app);
+    private router(app: Application, auth: any): void {
+        Routes.initRoutes(app, auth);
     }
 
 }

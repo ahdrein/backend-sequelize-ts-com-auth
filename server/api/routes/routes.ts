@@ -1,27 +1,25 @@
-import UserRoutes from '../../modules/User/routes';
+
 import { Application, Request, Response } from 'express';
+import UserRoutes from '../../modules/User/routes';
+import TokenRoutes from '../../modules/auth/auth';
 
 class Routes {
 
-    private router: UserRoutes;
+  private tokenRoute;
 
-    constructor(app: Application) {
-        this.router = new UserRoutes();
-        this.getRoutes(app);
+    constructor() {
+    this.tokenRoute = TokenRoutes;
     }
 
-     getRoutes(app: Application): void {
-        // app.route('/').get((req: Request, res: Response) => res.send('Hello, world!'));
-        // app.route('/ola/:nome').get((req: Request, res: Response) => res.send(`Hello, ${req.params.nome}`));
+     initRoutes(app: Application, auth: any): void {
+    app.route('/api/users/all').all(auth.config().authenticate()).get(UserRoutes.index);
+    app.route('/api/users/create').all(auth.config().authenticate()).post(UserRoutes.create);
+    app.route('/api/users/:id').all(auth.config().authenticate()).get(UserRoutes.findOne);
+    app.route('/api/users/:id/update').all(auth.config().authenticate()).put(UserRoutes.update);
+    app.route('/api/users/:id/destroy').all(auth.config().authenticate()).delete(UserRoutes.destroy);
 
-        app.route('/api/users/all').get(this.router.index);
-        app.route('/api/users/create').post(this.router.create);
-        app.route('/api/users/:id').get(this.router.findOne);
-        app.route('/api/users/:id/update').put(this.router.update);
-        app.route('/api/users/:id/destroy').delete(this.router.destroy);
+    app.route('/token').post(this.tokenRoute.auth);
     }
 }
 
-
-
-export default Routes;
+export default new Routes();

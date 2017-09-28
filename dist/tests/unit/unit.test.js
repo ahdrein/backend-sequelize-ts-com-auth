@@ -25,8 +25,7 @@ describe('Testes Unitários do Service', function () {
     });
     describe('Método Create', function () {
         it('Deve criar um novo Usuário', function () {
-            var user = new service_1.default();
-            return user.create({
+            return service_1.default.create({
                 id: 2,
                 name: 'Novo Usuario',
                 email: 'novousuario@email.com',
@@ -43,8 +42,7 @@ describe('Testes Unitários do Service', function () {
                 name: 'Nome Atualizado',
                 email: 'atualizado@email.com'
             };
-            var user = new service_1.default();
-            return user
+            return service_1.default
                 .update(defaultUser.id, usuarioAtualizado)
                 .then(function (data) {
                 helpers_1.expect(data[0]).to.be.equal(1);
@@ -53,17 +51,14 @@ describe('Testes Unitários do Service', function () {
     });
     describe('Método GET Users', function () {
         it('Deve retornar uma lista com todos os Usuários', function () {
-            var user = new service_1.default();
-            return user.getAll().then(function (data) {
+            return service_1.default.getAll().then(function (data) {
                 helpers_1.expect(data).to.be.an('array');
-                helpers_1.expect(data[0]).to.have.all.keys(['email', 'id', 'name', 'password']);
             });
         });
     });
     describe('Método getById', function () {
         it('Retornar um usuário de acordo com o ID passado', function () {
-            var user = new service_1.default();
-            return user.getById(defaultUser.id).then(function (data) {
+            return service_1.default.getById(defaultUser.id).then(function (data) {
                 helpers_1.expect(data).to.have.all.keys(['email', 'id', 'name', 'password']);
             });
         });
@@ -71,16 +66,14 @@ describe('Testes Unitários do Service', function () {
     describe('Método getByEmail', function () {
         it('Retornar um usuário de acordo com o EMAIL passado', function () {
             //Deve implementar a lógica do teste.
-            var user = new service_1.default();
-            return user.getByEmail(defaultUser.email).then(function (data) {
+            return service_1.default.getByEmail(defaultUser.email).then(function (data) {
                 helpers_1.expect(data).to.have.all.keys(['email', 'id', 'name', 'password']);
             });
         });
     });
     describe('Método Delete', function () {
         it('Deve deletar um Usuário', function () {
-            var user = new service_1.default();
-            return user.delete(defaultUser.id).then(function (data) {
+            return service_1.default.delete(defaultUser.id).then(function (data) {
                 console.log(data);
                 // expect(data).to.be.equal(1);
             });

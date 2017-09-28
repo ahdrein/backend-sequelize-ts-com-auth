@@ -1,2 +1,5 @@
-// module.exports = () => require('../env/&{proccess.env.NODE_ENV}.env.js')
-module.exports = function () { return require("../env/development"); };
+var extension = 'js';
+if (process.env.NODE_ENV == 'development') {
+    extension = 'ts';
+}
+module.exports = function () { return require("../env/" + process.env.NODE_ENV + ".env." + extension); };

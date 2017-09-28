@@ -28,8 +28,7 @@ describe('Testes Unitários do Service', () => {
 
   describe('Método Create', () => {
     it('Deve criar um novo Usuário', () => {
-      const user = new User();
-      return user.create({
+      return User.create({
           id: 2,
           name: 'Novo Usuario',
           email: 'novousuario@email.com',
@@ -49,8 +48,7 @@ describe('Testes Unitários do Service', () => {
         name: 'Nome Atualizado',
         email: 'atualizado@email.com'
       };
-      const user = new User();
-      return user
+      return User
               .update(defaultUser.id, usuarioAtualizado)
               .then(data => {
                 expect(data[0]).to.be.equal(1);
@@ -60,20 +58,16 @@ describe('Testes Unitários do Service', () => {
 
   describe('Método GET Users', () => {
     it('Deve retornar uma lista com todos os Usuários', () => {
-      const user = new User();
-      return user.getAll().then(data => {
+      return User.getAll().then(data => {
         expect(data).to.be.an('array');
-        expect(data[0]).to.have.all.keys(
-          ['email', 'id', 'name', 'password']
-        )
       })
     })
   });
 
   describe('Método getById', () => {
     it('Retornar um usuário de acordo com o ID passado', () => {
-        const user = new User();
-        return user.getById(defaultUser.id).then(data => {
+
+        return User.getById(defaultUser.id).then(data => {
             expect(data).to.have.all.keys(
               ['email', 'id', 'name', 'password']
             )
@@ -84,8 +78,7 @@ describe('Testes Unitários do Service', () => {
   describe('Método getByEmail', () => {
     it('Retornar um usuário de acordo com o EMAIL passado', () => {
       //Deve implementar a lógica do teste.
-        const user = new User();
-        return user.getByEmail(defaultUser.email).then(data => {
+        return User.getByEmail(defaultUser.email).then(data => {
           expect(data).to.have.all.keys(
             ['email', 'id', 'name', 'password']
           )
@@ -95,8 +88,7 @@ describe('Testes Unitários do Service', () => {
 
   describe('Método Delete', () => {
     it('Deve deletar um Usuário', () => {
-      const user = new User();
-      return user.delete(defaultUser.id).then(data => {
+      return User.delete(defaultUser.id).then(data => {
         console.log(data)
         // expect(data).to.be.equal(1);
       })

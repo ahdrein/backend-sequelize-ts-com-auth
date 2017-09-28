@@ -4,15 +4,16 @@ var express = require("express");
 var morgan = require("morgan");
 var bodyParser = require("body-parser");
 var routes_1 = require("./routes/routes");
-var errorHandlerApi_1 = require("./errorHandlerApi");
-//const helmet = require('helmet');
+var handlers_1 = require("./responses/handlers");
+var helmet = require('helmet');
+var compression = require('compression');
+var auth_1 = require("../auth");
 var Api = /** @class */ (function () {
     function Api() {
         this.express = express();
         this.middleware();
     }
     Api.prototype.middleware = function () {
-        this.router(this.express);
         this.express.use(function (req, res, next) {
             res.setHeader('Access-Control-Allow-Origin', '*');
             res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
@@ -21,12 +22,15 @@ var Api = /** @class */ (function () {
         });
         this.express.use(morgan('dev'));
         this.express.use(bodyParser.urlencoded({ extended: true }));
-        this.express.use(bodyParser.json);
-        //this.express.use(helmet());
-        this.express.use(errorHandlerApi_1.errorHandlerApi);
+        this.express.use(bodyParser.json());
+        this.express.use(helmet());
+        this.express.use(compression());
+        this.express.use(handlers_1.default.errorHandlerApi);
+        this.express.use(auth_1.default.config().initialize());
+        this.router(this.express, auth_1.default);
     };
-    Api.prototype.router = function (app) {
-        new routes_1.default(app);
+    Api.prototype.router = function (app, auth) {
+        routes_1.default.initRoutes(app, auth);
     };
     return Api;
 }());
