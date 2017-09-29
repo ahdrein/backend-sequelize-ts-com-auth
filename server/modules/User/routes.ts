@@ -1,29 +1,30 @@
 import { Request, Response } from 'express';
 import UserController from './controller';
+import * as Bluebird from 'bluebird';
 
 class UserRoutes {
 
-  constructor(){}
+  constructor() { }
 
-  index(req: Request, res: Response){
-    return UserController.getAll(req, res);
-    }
+  async index(req: Request, res: Response): Bluebird<void> {
+    return await UserController.getAll(req, res);
+  }
 
-  create(req: Request, res: Response){
-    return UserController.createUser(req, res);
-    }
+  async create(req: Request, res: Response): Bluebird<void> {
+    return await UserController.createUser(req, res);
+  }
 
-    findOne(req: Request, res: Response) {
-    return UserController.getById(req, res);
-    }
+  async findOne(req: Request, res: Response): Bluebird<void> {
+    return await UserController.getById(req, res);
+  }
 
-    update(req: Request, res: Response) {
-    return UserController.updateUser(req, res);
-    }
+  async update(req: Request, res: Response): Bluebird<void> {
+    return await UserController.updateUser(req, res);
+  }
 
-    destroy(req: Request, res: Response) {
-    return UserController.deleteUser(req, res);
-    }
+  async destroy(req: Request, res: Response): Bluebird<void> {
+    return await UserController.deleteUser(req, res);
+  }
 
 }
 

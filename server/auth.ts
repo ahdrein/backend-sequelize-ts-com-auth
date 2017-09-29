@@ -5,7 +5,7 @@ const config = require('./config/env/config')();
 
 class Auth {
     
-    config() {
+    config(){
       
       let opts = {
         secretOrKey: config.secret,

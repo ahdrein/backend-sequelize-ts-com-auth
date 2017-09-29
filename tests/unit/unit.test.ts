@@ -1,5 +1,5 @@
 import { testDouble, expect } from './config/helpers';
-import User from '../../server/modules/User/service';
+import UserService from '../../server/modules/User/service';
 const model = require('../../server/models');
 
 describe('Testes Unitários do Service', () => {
@@ -28,7 +28,7 @@ describe('Testes Unitários do Service', () => {
 
   describe('Método Create', () => {
     it('Deve criar um novo Usuário', () => {
-      return User.create({
+      return UserService.create({
           id: 2,
           name: 'Novo Usuario',
           email: 'novousuario@email.com',
@@ -48,7 +48,7 @@ describe('Testes Unitários do Service', () => {
         name: 'Nome Atualizado',
         email: 'atualizado@email.com'
       };
-      return User
+      return UserService
               .update(defaultUser.id, usuarioAtualizado)
               .then(data => {
                 expect(data[0]).to.be.equal(1);
@@ -58,7 +58,7 @@ describe('Testes Unitários do Service', () => {
 
   describe('Método GET Users', () => {
     it('Deve retornar uma lista com todos os Usuários', () => {
-      return User.getAll().then(data => {
+      return UserService.getAll().then(data => {
         expect(data).to.be.an('array');
       })
     })
@@ -67,7 +67,7 @@ describe('Testes Unitários do Service', () => {
   describe('Método getById', () => {
     it('Retornar um usuário de acordo com o ID passado', () => {
 
-        return User.getById(defaultUser.id).then(data => {
+        return UserService.getById(defaultUser.id).then(data => {
             expect(data).to.have.all.keys(
               ['email', 'id', 'name', 'password']
             )
@@ -78,7 +78,7 @@ describe('Testes Unitários do Service', () => {
   describe('Método getByEmail', () => {
     it('Retornar um usuário de acordo com o EMAIL passado', () => {
       //Deve implementar a lógica do teste.
-        return User.getByEmail(defaultUser.email).then(data => {
+        return UserService.getByEmail(defaultUser.email).then(data => {
           expect(data).to.have.all.keys(
             ['email', 'id', 'name', 'password']
           )
@@ -88,7 +88,7 @@ describe('Testes Unitários do Service', () => {
 
   describe('Método Delete', () => {
     it('Deve deletar um Usuário', () => {
-      return User.delete(defaultUser.id).then(data => {
+      return UserService.delete(defaultUser.id).then(data => {
         console.log(data)
         // expect(data).to.be.equal(1);
       })

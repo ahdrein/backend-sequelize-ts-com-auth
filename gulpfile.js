@@ -20,6 +20,7 @@ gulp.task("copy-opts", ['clean', 'compile'], function() {
              .pipe(gulp.dest('dist/tests/integration/config'))
 });
 
+/*
 gulp.task("copy-migration-config", ['clean', 'compile', 'copy-opts'], function() {
   return gulp.src('server/config/config.json')
              .pipe(gulp.dest('dist/server/config'))
@@ -28,6 +29,6 @@ gulp.task("copy-migration-config", ['clean', 'compile', 'copy-opts'], function()
 gulp.task("build", ['copy-migration-config'], function() {
   return gulp.src('server/migrations/*')
              .pipe(gulp.dest('dist/server/migrations'))
-});
+});*/
 
-gulp.task('default', ['build']);
+gulp.task('default', ['copy-opts']);
