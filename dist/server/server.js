@@ -32,6 +32,20 @@ else {
         server_1.listen(PORT);
         server_1.on('listening', function () { return console.log("Servidor est\u00E1 rodando na porta " + PORT); });
         server_1.on('error', function (error) { return console.log("Ocorreu um erro: " + error); });
+        api_1.default.use('/db', function (request, response) {
+            models.connect(process.env.DATABASE_URL, function (err, client, done) {
+                client.query('SELECT table_schema,table_name FROM information_schema.tables;', function (err, result) {
+                    done();
+                    if (err) {
+                        console.error(err);
+                        response.send("Error " + err);
+                    }
+                    else {
+                        response.render('pages/db', { results: result.rows });
+                    }
+                });
+            });
+        });
     });
     console.log("Worker " + process.pid + " started");
 }

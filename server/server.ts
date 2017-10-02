@@ -37,6 +37,22 @@ if (cluster.isMaster) {
         server.listen(PORT);
         server.on('listening', () => console.log(`Servidor está rodando na porta ${PORT}`))
         server.on('error', (error: NodeJS.ErrnoException) => console.log(`Ocorreu um erro: ${error}`))
+
+
+
+        Api.use('/db', function (request, response) {
+            models.connect(process.env.DATABASE_URL, function(err, client, done) {
+              client.query('SELECT table_schema,table_name FROM information_schema.tables;', function(err, result) {
+                done();
+                if (err)
+                 { console.error(err); response.send("Error " + err); }
+                else
+                 { response.render('pages/db', {results: result.rows} ); }
+              });
+            });
+          });
+    
+
     })
   
     console.log(`Worker ${process.pid} started`);
