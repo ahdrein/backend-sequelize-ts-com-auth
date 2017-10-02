@@ -9,9 +9,12 @@ var env       = config.env || 'development';
 var db: any        = {};
 
 var sequelize: any;
-
-if (config.dbURL) {
-  var sequelize = new Sequelize(config.dbURL);
+var DBURL: any = config.dbURL;
+if (process.env.NODE_ENV == 'production') {
+  DBURL = process.env.DATABASE_URL
+}
+if (DBURL) {
+  var sequelize = new Sequelize(DBURL);
 } else {
   var sequelize = new Sequelize(config.db, config.username, config.password);
 }

@@ -32,7 +32,7 @@ class Api {
         this.express.use(bodyParser.json());
         this.express.use(helmet());
         this.express.use(compression());
-    this.express.use(Handlers.errorHandlerApi);
+        this.express.use(Handlers.errorHandlerApi);
         this.express.use(Auth.config().initialize());
         this.router(this.express, Auth);
     }

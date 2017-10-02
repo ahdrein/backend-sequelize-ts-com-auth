@@ -7,6 +7,11 @@ const numCPUs = require('os').cpus().length;
 
 const config = require('./config/env/config')();
 
+let PORT = config.serverPort;
+if (process.env.NODE_ENV == 'production') {
+    PORT = process.env.PORT;
+}
+
 if (cluster.isMaster) {
     console.log(`Master ${process.pid} is running`);
   
@@ -29,8 +34,8 @@ if (cluster.isMaster) {
     const server = http.createServer(Api);
 
     models.sequelize.sync().then(() => {
-        server.listen(config.serverPort);
-        server.on('listening', () => console.log(`Server está rodando na porta ${config.serverPort}`))
+        server.listen(PORT);
+        server.on('listening', () => console.log(`Servidor está rodando na porta ${PORT}`))
         server.on('error', (error: NodeJS.ErrnoException) => console.log(`Ocorreu um erro: ${error}`))
     })
   

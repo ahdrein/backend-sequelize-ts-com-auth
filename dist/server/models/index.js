@@ -7,8 +7,12 @@ var config = require('../config/env/config')();
 var env = config.env || 'development';
 var db = {};
 var sequelize;
-if (config.dbURL) {
-    var sequelize = new Sequelize(config.dbURL);
+var DBURL = config.dbURL;
+if (process.env.NODE_ENV == 'production') {
+    DBURL = process.env.DATABASE_URL;
+}
+if (DBURL) {
+    var sequelize = new Sequelize(DBURL);
 }
 else {
     var sequelize = new Sequelize(config.db, config.username, config.password);

@@ -6,7 +6,7 @@
   "scripts": {
     "start": "cross-env NODE_ENV=development ./node_modules/.bin/ts-node server/server.ts",
     "builded": "cross-env PORT=5000 NODE_ENV=production node dist/server/server.js",
-    "production": "node dist/server/server.js",
+    "production": "pm2 start --interpreter babel-node index.js --name backend",
     "test": "cross-env PORT=5000 NODE_ENV=test npm run lint && npm run test-unit && npm run test-integration",
     "test-integration": "cross-env PORT=5000 NODE_ENV=test mocha --opts dist/test/integration/mocha.opts dist/tests/integration/**/*.js",
     "test-unit": "cross-env PORT=5000 NODE_ENV=test mocha --opts dist/tests/unit/config/mocha.opts dist/tests/unit/**/*.js",
