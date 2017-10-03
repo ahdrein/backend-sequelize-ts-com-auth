@@ -33,7 +33,7 @@ if (cluster.isMaster) {
 
     const server = http.createServer(Api);
 
-    models.sequelize.sync({force: true}).then(() => {
+    models.sequelize.sync().then(() => {
         server.listen(PORT);
         server.on('listening', () => console.log(`Servidor está rodando na porta ${PORT}`))
         server.on('error', (error: NodeJS.ErrnoException) => console.log(`Ocorreu um erro: ${error}`))

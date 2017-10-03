@@ -8,39 +8,39 @@ class UserController {
 
     constructor() { }
 
-    async getAll(req: Request, res: Response): Bluebird<void> {
-        await UserService
+    getAll(req: Request, res: Response) {
+        UserService
             .getAll()
             .then(_.partial(Handlers.onSuccess, res))
             .catch(_.partial(Handlers.onError, res, `Erro ao buscar todos os usuários`))
     }
 
-    async createUser(req: Request, res: Response): Bluebird<void> {
-        await UserService
+    createUser(req: Request, res: Response) {
+        UserService
             .create(req.body)
             .then(_.partial(Handlers.onSuccess, res))
             .catch(_.partial(Handlers.dbErrorHandler, res))
             .catch(_.partial(Handlers.onError, res, `Erro ao inserir novo usuário`));
     }
 
-    async getById(req: Request, res: Response): Bluebird<void> {
+    getById(req: Request, res: Response) {
         const userId = parseInt(req.params.id);
-        await UserService.getById(userId)
+        UserService.getById(userId)
             .then(_.partial(Handlers.onSuccess, res))
             .catch(_.partial(Handlers.onError, res, `Usuário não encontrado`))
     }
 
-    async updateUser(req: Request, res: Response): Bluebird<void> {
+    updateUser(req: Request, res: Response) {
         const userId = parseInt(req.params.id);
         const props = req.body;
-        await UserService.update(userId, props)
+        UserService.update(userId, props)
             .then(_.partial(Handlers.onSuccess, res))
             .catch(_.partial(Handlers.onError, res, `Falha ao atualizar usuário`))
     }
 
-    async deleteUser(req: Request, res: Response): Bluebird<void> {
+    deleteUser(req: Request, res: Response) {
         const userId = parseInt(req.params.id);
-        await UserService.delete(userId)
+        UserService.delete(userId)
             .then(_.partial(Handlers.onSuccess, res))
             .catch(_.partial(Handlers.onError, res, `Erro ao excluir usuário`))
     }
