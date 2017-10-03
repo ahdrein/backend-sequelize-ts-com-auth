@@ -30,7 +30,7 @@ var Auth = /** @class */ (function () {
         }));
         return {
             initialize: function () { return passport.initialize(); },
-            authenticate: function () { return passport.authenticate('jwt', { session: false }); }
+            authenticate: function () { return passport.authenticate('JWT', { session: false }); }
         };
     };
     return Auth;
