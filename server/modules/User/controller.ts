@@ -43,7 +43,7 @@ class UserController {
         const userId = parseInt(req.params.id);
         await UserService.delete(userId)
             .then(_.partial(Handlers.onSuccess, res))
-            .catch(_.partial(Handlers.onError, res, `Erro ao excluir usuário`, ,HTTPStatus.NO_CONTENT))
+            .catch(_.partial(Handlers.onError, res, `Erro ao excluir usuário`, null ,HTTPStatus.NO_CONTENT))
     }
 }
 

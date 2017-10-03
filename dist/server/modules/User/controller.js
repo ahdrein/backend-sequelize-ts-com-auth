@@ -118,7 +118,7 @@ var UserController = /** @class */ (function () {
                         userId = parseInt(req.params.id);
                         return [4 /*yield*/, service_1.default.delete(userId)
                                 .then(_.partial(handlers_1.default.onSuccess, res))
-                                .catch(_.partial(handlers_1.default.onError, res, "Erro ao excluir usu\u00E1rio", , HTTPStatus.NO_CONTENT))];
+                                .catch(_.partial(handlers_1.default.onError, res, "Erro ao excluir usu\u00E1rio", null, HTTPStatus.NO_CONTENT))];
                     case 1:
                         _a.sent();
                         return [2 /*return*/];
