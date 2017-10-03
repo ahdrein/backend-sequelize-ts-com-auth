@@ -3,6 +3,7 @@ import * as _ from 'lodash';
 import Handlers from '../../api/responses/handlers';
 import UserService from './service';
 import * as Bluebird from 'bluebird';
+import * as HTTPStatus from 'http-status';
 
 class UserController {
 
@@ -19,7 +20,7 @@ class UserController {
         await UserService
             .create(req.body)
             .then(_.partial(Handlers.onSuccess, res))
-            .catch(_.partial(Handlers.dbErrorHandler, res))
+            .catch(_.partial(Handlers.dbErrorHandler, res, HTTPStatus.CREATED))
             .catch(_.partial(Handlers.onError, res, `Erro ao inserir novo usuário`));
     }
 
@@ -34,7 +35,7 @@ class UserController {
         const userId = parseInt(req.params.id);
         const props = req.body;
         await UserService.update(userId, props)
-            .then(_.partial(Handlers.onSuccess, res))
+            .then(_.partial(Handlers.onSuccess, res, HTTPStatus.CREATED))
             .catch(_.partial(Handlers.onError, res, `Falha ao atualizar usuário`))
     }
 
@@ -42,7 +43,7 @@ class UserController {
         const userId = parseInt(req.params.id);
         await UserService.delete(userId)
             .then(_.partial(Handlers.onSuccess, res))
-            .catch(_.partial(Handlers.onError, res, `Erro ao excluir usuário`))
+            .catch(_.partial(Handlers.onError, res, `Erro ao excluir usuário`, ,HTTPStatus.NO_CONTENT))
     }
 }
 

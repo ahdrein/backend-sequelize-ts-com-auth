@@ -39,6 +39,7 @@ var _ = require("lodash");
 var handlers_1 = require("../../api/responses/handlers");
 var service_1 = require("./service");
 var Bluebird = require("bluebird");
+var HTTPStatus = require("http-status");
 var UserController = /** @class */ (function () {
     function UserController() {
     }
@@ -64,7 +65,7 @@ var UserController = /** @class */ (function () {
                     case 0: return [4 /*yield*/, service_1.default
                             .create(req.body)
                             .then(_.partial(handlers_1.default.onSuccess, res))
-                            .catch(_.partial(handlers_1.default.dbErrorHandler, res))
+                            .catch(_.partial(handlers_1.default.dbErrorHandler, res, HTTPStatus.CREATED))
                             .catch(_.partial(handlers_1.default.onError, res, "Erro ao inserir novo usu\u00E1rio"))];
                     case 1:
                         _a.sent();
@@ -99,7 +100,7 @@ var UserController = /** @class */ (function () {
                         userId = parseInt(req.params.id);
                         props = req.body;
                         return [4 /*yield*/, service_1.default.update(userId, props)
-                                .then(_.partial(handlers_1.default.onSuccess, res))
+                                .then(_.partial(handlers_1.default.onSuccess, res, HTTPStatus.CREATED))
                                 .catch(_.partial(handlers_1.default.onError, res, "Falha ao atualizar usu\u00E1rio"))];
                     case 1:
                         _a.sent();
@@ -117,7 +118,7 @@ var UserController = /** @class */ (function () {
                         userId = parseInt(req.params.id);
                         return [4 /*yield*/, service_1.default.delete(userId)
                                 .then(_.partial(handlers_1.default.onSuccess, res))
-                                .catch(_.partial(handlers_1.default.onError, res, "Erro ao excluir usu\u00E1rio"))];
+                                .catch(_.partial(handlers_1.default.onError, res, "Erro ao excluir usu\u00E1rio", , HTTPStatus.NO_CONTENT))];
                     case 1:
                         _a.sent();
                         return [2 /*return*/];

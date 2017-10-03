@@ -9,13 +9,25 @@ class Handlers {
 
   constructor(){}
 
-  onSuccess(res: Response, data: any){
-      return res.status(HTTPStatus.OK).json({ payload: data });
+  onSuccess(res: Response, data: any, statusCode = HTTPStatus.OK){
+      return res.status(statusCode)
+                .json({ payload: data });
   }
 
-  onError(res: Response, message: string, err: any) {
+  /*onError(res: Response, message: string, err: any) {
     console.log(`Error: ${err}`);
     return res.status(HTTPStatus.INTERNAL_SERVER_ERROR).send(message);
+  }*/
+
+  onError(res: Response, message: string, err: any, statusCode = HTTPStatus.BAD_REQUEST) {
+    console.log(`Error: ${err}`);
+    return res.status(statusCode)
+              .send({
+                error: message,
+                status: statusCode,
+                timestamp: new Date(),
+                pageError: message
+              });
   }
 
   authSuccess(res: Response, credentials: any, data: any) {

@@ -7,12 +7,25 @@ var config = require('../../config/env/config')();
 var Handlers = /** @class */ (function () {
     function Handlers() {
     }
-    Handlers.prototype.onSuccess = function (res, data) {
-        return res.status(HTTPStatus.OK).json({ payload: data });
+    Handlers.prototype.onSuccess = function (res, data, statusCode) {
+        if (statusCode === void 0) { statusCode = HTTPStatus.OK; }
+        return res.status(statusCode)
+            .json({ payload: data });
     };
-    Handlers.prototype.onError = function (res, message, err) {
+    /*onError(res: Response, message: string, err: any) {
+      console.log(`Error: ${err}`);
+      return res.status(HTTPStatus.INTERNAL_SERVER_ERROR).send(message);
+    }*/
+    Handlers.prototype.onError = function (res, message, err, statusCode) {
+        if (statusCode === void 0) { statusCode = HTTPStatus.BAD_REQUEST; }
         console.log("Error: " + err);
-        return res.status(HTTPStatus.INTERNAL_SERVER_ERROR).send(message);
+        return res.status(statusCode)
+            .send({
+            error: message,
+            status: statusCode,
+            timestamp: new Date(),
+            pageError: message
+        });
     };
     Handlers.prototype.authSuccess = function (res, credentials, data) {
         var isMatch = bcrypt.compareSync(credentials.password, data.password);
