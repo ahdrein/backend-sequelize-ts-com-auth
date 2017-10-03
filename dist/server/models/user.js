@@ -42,7 +42,7 @@ function default_1(sequelize, DataTypes) {
     }
     User.create({
         name: 'John',
-        username: 'Hancock',
+        email: 'Hancock',
         password: '123'
     });
     return User;
