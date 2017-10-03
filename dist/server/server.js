@@ -28,7 +28,7 @@ else {
     //  res.end('hello world\n');
     //}).listen(8000);
     var server_1 = http.createServer(api_1.default);
-    models.sequelize.sync().then(function () {
+    models.sequelize.sync({ force: true }).then(function () {
         server_1.listen(PORT);
         server_1.on('listening', function () { return console.log("Servidor est\u00E1 rodando na porta " + PORT); });
         server_1.on('error', function (error) { return console.log("Ocorreu um erro: " + error); });
