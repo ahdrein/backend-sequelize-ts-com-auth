@@ -1,38 +1,38 @@
 import * as bcrypt from 'bcrypt';
 export default function (sequelize, DataTypes) {
 
-    const User = sequelize.define('User', {
-        id: {
-            type: DataTypes.INTEGER,
-            primaryKey: true,
-            autoIncrement: true
-        },
-        name: {
-            type: DataTypes.STRING,
-            allowNull: false,
-            validate: {
+  const User = sequelize.define('User', {
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true
+    },
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
         notEmpty: true
       }
-        },
-        email: {
-            type: DataTypes.STRING,
-            allowNull: false,
-            validate: {
+    },
+    email: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
         notEmpty: true
       }
-        },
-        password: {
-            type: DataTypes.STRING,
-            allowNull: false,
-            validate: {
+    },
+    password: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
         notEmpty: true
       }
-        }
+    }
   });
 
   User.beforeCreate((user) => {
     return hashPassword(user);
-    });
+  });
 
   User.beforeUpdate((user) => {
     return hashPassword(user);
@@ -43,5 +43,11 @@ export default function (sequelize, DataTypes) {
     user.set('password', bcrypt.hashSync(user.password, salt));
   }
 
-    return User;
+  User.create({
+    name: 'John',
+    username: 'Hancock',
+    password: '123'
+  });
+
+  return User;
 }

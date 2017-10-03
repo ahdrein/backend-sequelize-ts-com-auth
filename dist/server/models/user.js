@@ -40,6 +40,11 @@ function default_1(sequelize, DataTypes) {
         var salt = bcrypt.genSaltSync(10);
         user.set('password', bcrypt.hashSync(user.password, salt));
     }
+    User.create({
+        name: 'John',
+        username: 'Hancock',
+        password: '123'
+    });
     return User;
 }
 exports.default = default_1;
