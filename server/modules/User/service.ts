@@ -14,29 +14,29 @@ class User implements IUser {
     return model.User.create(user);
   }
 
-  async getAll(): Bluebird<IUser[]>{
-    return await model.User.findAll({
+  getAll(): Bluebird<IUser[]>{
+    return model.User.findAll({
       order: ['name']
     })
     .then(createUsers);
   }
 
-  async getById(id: number): Bluebird<IUserDetail> {
-    return await model.User.findOne({
+  getById(id: number): Bluebird<IUserDetail> {
+    return model.User.findOne({
       where: {id}
     })
     .then(createUserById);
   }
 
-  async getByEmail(email: string): Bluebird<IUserDetail> {
-    return await model.User.findOne({
+  getByEmail(email: string): Bluebird<IUserDetail> {
+    return model.User.findOne({
       where: {email}
     })
     .then(createUserByEmail);
   }
 
-  async update(id: number, user: any): Bluebird<IUserDetail>{
-    return await model.User.update(user, {
+  update(id: number, user: any){
+    return model.User.update(user, {
       where: {id},
       fields: ['name', 'email', 'password'],
       hooks: true,
@@ -44,8 +44,8 @@ class User implements IUser {
     });
   }
 
-  async delete(id: number): Bluebird<IUserDetail>{
-    return await model.User.destroy({
+  delete(id: number){
+    return model.User.destroy({
       where: {id}
     });
   }

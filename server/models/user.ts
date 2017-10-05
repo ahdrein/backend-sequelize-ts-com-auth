@@ -43,11 +43,11 @@ export default function (sequelize, DataTypes) {
     user.set('password', bcrypt.hashSync(user.password, salt));
   }
 
-  User.create({
+/*  User.create({
     name: 'John',
     email: 'Hancock',
     password: '123'
-  });
+  });*/
 
   return User;
 }

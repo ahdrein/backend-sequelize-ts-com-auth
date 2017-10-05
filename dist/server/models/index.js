@@ -7,9 +7,17 @@ var config = require('../config/env/config')();
 var env = config.env || 'development';
 var db = {};
 var sequelize;
-var DBURL = config.dbURL;
+var DBURL;
+if (config.dbURL) {
+    DBURL = config.dbURL;
+}
+else {
+    DBURL = 'postgres://ahdrein:123@localhost:5432/ts_api';
+}
 if (process.env.NODE_ENV == 'production') {
-    DBURL = process.env.DATABASE_URL;
+    if (process.env.DATABASE_URL) {
+        DBURL = process.env.DATABASE_URL;
+    }
 }
 if (DBURL) {
     var sequelize = new Sequelize(DBURL);

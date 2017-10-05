@@ -48,6 +48,7 @@ describe('Routes: Teste de Integração - User', () => {
         email: userDefault.email,
         password: userDefault.password
       };
+
       request(app)
         .post('/token')
         .send(credentials)
@@ -56,6 +57,7 @@ describe('Routes: Teste de Integração - User', () => {
           expect(res.body.token).to.equal(`${token}`);
           done(error);
         });
+        
     });
 
     it('Não deve gerar Token', done => {

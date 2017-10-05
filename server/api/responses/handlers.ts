@@ -11,13 +11,8 @@ class Handlers {
 
   onSuccess(res: Response, data: any, statusCode = HTTPStatus.OK){
       return res.status(statusCode)
-                .json({ payload: data });
+                .json({ data });
   }
-
-  /*onError(res: Response, message: string, err: any) {
-    console.log(`Error: ${err}`);
-    return res.status(HTTPStatus.INTERNAL_SERVER_ERROR).send(message);
-  }*/
 
   onError(res: Response, message: string, err: any, statusCode = HTTPStatus.BAD_REQUEST) {
     console.log(`Error: ${err}`);
@@ -26,7 +21,7 @@ class Handlers {
                 error: message,
                 status: statusCode,
                 timestamp: new Date(),
-                pageError: message
+                pageError: `https://erros.backend-sequelized-ts.com/${statusCode}`
               });
   }
 

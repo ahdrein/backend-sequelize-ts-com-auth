@@ -10,12 +10,8 @@ var Handlers = /** @class */ (function () {
     Handlers.prototype.onSuccess = function (res, data, statusCode) {
         if (statusCode === void 0) { statusCode = HTTPStatus.OK; }
         return res.status(statusCode)
-            .json({ payload: data });
+            .json({ data: data });
     };
-    /*onError(res: Response, message: string, err: any) {
-      console.log(`Error: ${err}`);
-      return res.status(HTTPStatus.INTERNAL_SERVER_ERROR).send(message);
-    }*/
     Handlers.prototype.onError = function (res, message, err, statusCode) {
         if (statusCode === void 0) { statusCode = HTTPStatus.BAD_REQUEST; }
         console.log("Error: " + err);
@@ -24,7 +20,7 @@ var Handlers = /** @class */ (function () {
             error: message,
             status: statusCode,
             timestamp: new Date(),
-            pageError: message
+            pageError: "https://erros.backend-sequelized-ts.com/" + statusCode
         });
     };
     Handlers.prototype.authSuccess = function (res, credentials, data) {
