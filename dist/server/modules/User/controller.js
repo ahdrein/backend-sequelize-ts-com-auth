@@ -16,7 +16,7 @@ var UserController = /** @class */ (function () {
     UserController.prototype.createUser = function (req, res) {
         service_1.default
             .create(req.body)
-            .then(_.partial(handlers_1.default.onSuccess, res, HTTPStatus.CREATED))
+            .then(_.partial(handlers_1.default.onSuccess, res, req.body, HTTPStatus.CREATED))
             .catch(_.partial(handlers_1.default.dbErrorHandler, res))
             .catch(_.partial(handlers_1.default.onError, res, "Erro ao inserir novo usu\u00E1rio"));
     };

@@ -11,6 +11,10 @@ var Auth = /** @class */ (function () {
         var opts = {
             secretOrKey: config.secret,
             jwtFromRequest: passport_jwt_1.ExtractJwt.fromAuthHeaderWithScheme('JWT'),
+            issuer: 'myApp',
+            audience: 'myapp.com',
+            ignoreExpiration: false,
+            algorithms: ['HS256']
         };
         passport.use(new passport_jwt_1.Strategy(opts, function (jwtPayload, done) {
             service_1.default

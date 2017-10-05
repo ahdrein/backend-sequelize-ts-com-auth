@@ -1,16 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var HTTPStatus = require("http-status");
-var jwt = require("jwt-simple");
+// import * as jwt from 'jwt-simple';
 var bcrypt = require("bcrypt");
 var config = require('../../config/env/config')();
+var jwt = require('jsonwebtoken');
 var Handlers = /** @class */ (function () {
     function Handlers() {
     }
     Handlers.prototype.onSuccess = function (res, data, statusCode) {
         if (statusCode === void 0) { statusCode = HTTPStatus.OK; }
         return res.status(statusCode)
-            .json({ data: data });
+            .json({ data: data, statusCode: statusCode });
     };
     Handlers.prototype.onError = function (res, message, err, statusCode) {
         if (statusCode === void 0) { statusCode = HTTPStatus.BAD_REQUEST; }
@@ -27,12 +28,22 @@ var Handlers = /** @class */ (function () {
         var isMatch = bcrypt.compareSync(credentials.password, data.password);
         if (isMatch) {
             var payload = { id: data.id };
+            var token = jwt.sign({
+                id: data.id
+            }, config.secret, {
+                expiresIn: "1 day",
+                audience: 'myapp.com',
+                issuer: 'myApp'
+            });
+            var name_1 = data.name, email = data.email;
             return res.json({
-                token: jwt.encode(payload, config.secret)
+                // token: jwt.encode(payload, config.secret)
+                name: name_1, email: email, token: token
             });
         }
         else {
-            return res.sendStatus(HTTPStatus.UNAUTHORIZED);
+            // return res.sendStatus(HTTPStatus.UNAUTHORIZED);
+            res.status(400).send({ errors: ['Usuário/Senha inválidos'] });
         }
     };
     Handlers.prototype.authFail = function (req, res) {

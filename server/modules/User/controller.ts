@@ -18,8 +18,8 @@ class UserController {
     createUser(req: Request, res: Response) {
         UserService
             .create(req.body)
-            .then(_.partial(Handlers.onSuccess, res,  HTTPStatus.CREATED))
-            .catch(_.partial(Handlers.dbErrorHandler, res,))
+            .then(_.partial(Handlers.onSuccess, res, req.body, HTTPStatus.CREATED))
+            .catch(_.partial(Handlers.dbErrorHandler, res))
             .catch(_.partial(Handlers.onError, res, `Erro ao inserir novo usuário`));
     }
 

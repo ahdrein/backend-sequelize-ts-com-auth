@@ -10,6 +10,10 @@ class Auth {
       let opts = {
         secretOrKey: config.secret,
         jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme('JWT'),
+        issuer: 'myApp',
+        audience: 'myapp.com',
+        ignoreExpiration: false,
+        algorithms: [ 'HS256' ]
       };
 
       passport.use(new Strategy(opts, (jwtPayload, done) => {
