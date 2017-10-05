@@ -14,11 +14,13 @@ if (config.dbURL) {
 else {
     DBURL = 'postgres://ahdrein:123@localhost:5432/ts_api';
 }
+console.log(DBURL);
 if (process.env.NODE_ENV == 'production') {
     if (process.env.DATABASE_URL) {
         DBURL = process.env.DATABASE_URL;
     }
 }
+console.log(DBURL);
 if (DBURL) {
     var sequelize = new Sequelize(DBURL);
 }
